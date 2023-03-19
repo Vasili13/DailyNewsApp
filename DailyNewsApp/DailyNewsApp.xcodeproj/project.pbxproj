@@ -13,6 +13,7 @@
 		9E59C67B29BDF07A00F69204 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E59C67929BDF07A00F69204 /* Main.storyboard */; };
 		9E59C67D29BDF07A00F69204 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E59C67C29BDF07A00F69204 /* Assets.xcassets */; };
 		9E59C68029BDF07A00F69204 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E59C67E29BDF07A00F69204 /* LaunchScreen.storyboard */; };
+		9EA11AFF29C799C800135EF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9EA11AFE29C799C800135EF7 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA11AFF29C799C800135EF7 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +58,47 @@
 		9E59C67229BDF07A00F69204 /* DailyNewsApp */ = {
 			isa = PBXGroup;
 			children = (
-				9E59C67329BDF07A00F69204 /* AppDelegate.swift */,
-				9E59C67529BDF07A00F69204 /* SceneDelegate.swift */,
-				9E59C67729BDF07A00F69204 /* ViewController.swift */,
-				9E59C67929BDF07A00F69204 /* Main.storyboard */,
-				9E59C67C29BDF07A00F69204 /* Assets.xcassets */,
-				9E59C67E29BDF07A00F69204 /* LaunchScreen.storyboard */,
+				9EA11AFB29C7565900135EF7 /* Controllers */,
+				9EA11AFA29C7564C00135EF7 /* Views */,
+				9EA11AF929C7564100135EF7 /* Models */,
+				9EA11AFC29C7566200135EF7 /* SupportFiles */,
 				9E59C68129BDF07A00F69204 /* Info.plist */,
 			);
 			path = DailyNewsApp;
+			sourceTree = "<group>";
+		};
+		9EA11AF929C7564100135EF7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9EA11AFA29C7564C00135EF7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9E59C67929BDF07A00F69204 /* Main.storyboard */,
+				9E59C67E29BDF07A00F69204 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9EA11AFB29C7565900135EF7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9E59C67729BDF07A00F69204 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9EA11AFC29C7566200135EF7 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				9E59C67329BDF07A00F69204 /* AppDelegate.swift */,
+				9E59C67529BDF07A00F69204 /* SceneDelegate.swift */,
+				9E59C67C29BDF07A00F69204 /* Assets.xcassets */,
+			);
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +117,9 @@
 			dependencies = (
 			);
 			name = DailyNewsApp;
+			packageProductDependencies = (
+				9EA11AFE29C799C800135EF7 /* SnapKit */,
+			);
 			productName = DailyNewsApp;
 			productReference = 9E59C67029BDF07A00F69204 /* DailyNewsApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +148,9 @@
 				Base,
 			);
 			mainGroup = 9E59C66729BDF07A00F69204;
+			packageReferences = (
+				9EA11AFD29C799C800135EF7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 9E59C67129BDF07A00F69204 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -356,6 +396,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9EA11AFD29C799C800135EF7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9EA11AFE29C799C800135EF7 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EA11AFD29C799C800135EF7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9E59C66829BDF07A00F69204 /* Project object */;
 }
