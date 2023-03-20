@@ -10,6 +10,11 @@ import SnapKit
 
 class ViewController: UIViewController {
     
+    lazy var menuBar: MenuBarCollectionView = {
+        let mb = MenuBarCollectionView()
+        return mb
+    }()
+    
     lazy var horizontalNewsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -27,8 +32,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "text"
+        navigationItem.title = "News"
         
+        view.addSubview(menuBar)
         view.addSubview(horizontalNewsCollectionView)
         
         horizontalNewsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
@@ -39,10 +45,16 @@ class ViewController: UIViewController {
     override func updateViewConstraints() {
         super.updateViewConstraints()
         
+        menuBar.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.top.equalTo(100)
+            make.height.equalTo(50)
+        }
+        
         horizontalNewsCollectionView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalToSuperview()
-            make.top.equalTo(100)
+            make.top.equalTo(menuBar).offset(50)
         }
     }
 }
@@ -62,6 +74,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: view.frame.width, height: view.frame.height )
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset.x)
     }
 }
 
