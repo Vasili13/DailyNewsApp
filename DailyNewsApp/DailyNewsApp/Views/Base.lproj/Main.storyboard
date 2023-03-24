@@ -38,7 +38,91 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117" y="4"/>
+            <point key="canvasLocation" x="-59" y="4"/>
+        </scene>
+        <!--Detailed View Controller-->
+        <scene sceneID="mkJ-4x-xIH">
+            <objects>
+                <viewController storyboardIdentifier="DetailedViewController" id="eag-4d-bQL" customClass="DetailedViewController" customModule="DailyNewsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3fK-fQ-RBb">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRV-PM-uzg">
+                                <rect key="frame" x="159" y="409" width="75" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ikZ-Nr-L0G"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dGu-jG-OVG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="674" y="4"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="sgn-CZ-hD8">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="92o-cy-Hjx" customClass="LoginViewController" customModule="DailyNewsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="w74-uy-RKs">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="NEY-s9-hFJ">
+                                <rect key="frame" x="16" y="289" width="361" height="79"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GNy-U0-dN4">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ttV-eu-sAj">
+                                        <rect key="frame" x="0.0" y="45" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fmt-MT-cBi">
+                                <rect key="frame" x="161" y="409" width="71" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Log In"/>
+                                <connections>
+                                    <segue destination="xUR-Gu-0dS" kind="show" destinationCreationSelector="logInSegue:" id="Ae6-oI-di7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XMp-uA-Q6b">
+                                <rect key="frame" x="157" y="452" width="79" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Log Up"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="7Fv-Zm-QVo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NEY-s9-hFJ" firstAttribute="top" secondItem="7Fv-Zm-QVo" secondAttribute="top" constant="230" id="Fv5-ih-EPZ"/>
+                            <constraint firstItem="7Fv-Zm-QVo" firstAttribute="trailing" secondItem="NEY-s9-hFJ" secondAttribute="trailing" constant="16" id="rkO-V6-DXn"/>
+                            <constraint firstItem="NEY-s9-hFJ" firstAttribute="leading" secondItem="7Fv-Zm-QVo" secondAttribute="leading" constant="16" id="sZ5-gG-tOd"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="30Q-Me-ypy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1412.9770992366412" y="3.5211267605633805"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="l21-pa-IZ2">
+            <objects>
+                <hostingController id="xUR-Gu-0dS" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="n53-c8-Aka"/>
+                </hostingController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="glY-U4-INc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2182" y="4"/>
         </scene>
     </scenes>
     <resources>

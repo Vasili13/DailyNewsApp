@@ -25,6 +25,8 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
     private let cellID = "CellID"
     private let categoryName = ["Top", "Entertainment", "Business", "Health", "Science", "Sports", "Technology"]
     
+    var viewController: ViewController?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -56,48 +58,10 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 2, height: 50)
+        viewController?.scrollMenu(menuIndex: indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0 
-    }
-    
-}
-
-class MenuCell: UICollectionViewCell {
-    
-    lazy var categoryText: UILabel = {
-        let lbl = UILabel()
-        return lbl
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        addSubview(categoryText)
-        updateConstraints()
-    }
-    
-    override var isHighlighted: Bool {
-        didSet {
-            categoryText.textColor = isHighlighted ? UIColor.magenta : UIColor.green
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func updateConstraints() {
-        super.updateConstraints()
-        
-        categoryText.snp.makeConstraints { make in
-            make.height.width.equalToSuperview()
-        }
     }
 }

@@ -12,17 +12,26 @@ class ViewController: UIViewController {
     
     lazy var menuBar: MenuBarCollectionView = {
         let mb = MenuBarCollectionView()
+        mb.viewController = self
         return mb
     }()
     
     lazy var horizontalNewsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.register(CategoryCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(EntertainmentCell.self, forCellWithReuseIdentifier: "entCell")
+        cv.register(BusinessCell.self, forCellWithReuseIdentifier: "business")
+        cv.register(HealthCell.self, forCellWithReuseIdentifier: "health")
+        cv.register(ScienceCell.self, forCellWithReuseIdentifier: "science")
+        cv.register(SportsCell.self, forCellWithReuseIdentifier: "sport")
+        cv.register(TechnologyCell.self, forCellWithReuseIdentifier: "tech")
+        
         cv.dataSource = self
         cv.delegate = self
-        cv.backgroundColor = .systemGray
         cv.isPagingEnabled = true
         return cv
     }()
@@ -31,15 +40,29 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "News"
-        
+        configurateNavBar()
+        createSearchBar()
         view.addSubview(menuBar)
         view.addSubview(horizontalNewsCollectionView)
-        
-        horizontalNewsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        
         updateViewConstraints()
+    }
+    
+    func createSearchBar() {
+        
+    }
+    
+    func scrollMenu(menuIndex: Int) {
+        let indexPath = IndexPath(item: menuIndex, section: 0)
+        horizontalNewsCollectionView.scrollToItem(at: indexPath, at: [], animated: true)
+    }
+    
+    private func configurateNavBar() {
+        navigationItem.title = "News"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill.badge.plus"), style: .done, target: self, action: #selector(onButtonTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle.fill"), style: .done, target: self, action: #selector(searchInfo))
+        navigationItem.rightBarButtonItem?.tintColor = .black
+        navigationItem.leftBarButtonItem?.tintColor = .black
     }
 
     override func updateViewConstraints() {
@@ -57,27 +80,50 @@ class ViewController: UIViewController {
             make.top.equalTo(menuBar).offset(50)
         }
     }
+    
+    @objc func searchInfo() {
+        
+    }
+    
+    @objc func onButtonTapped() {
+        guard let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else { return }
+        navigationController?.pushViewController(loginVC, animated: true)
+    }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MyProtocol {
+    
+    func loadNewScreen() {
+        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController")
+        present(destination, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-    
-        let colors: [UIColor] = [.cyan,.brown,.clear,.lightText,.lightGray,.green,.magenta]
-        cell.backgroundColor = colors[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CategoryCell
+        cell.delegate = self
+        
+        if indexPath.item == 1 {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "entCell", for: indexPath) as! EntertainmentCell
+        } else if indexPath.item == 2 {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "business", for: indexPath) as! BusinessCell
+        } else if indexPath.item == 3 {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "health", for: indexPath) as! HealthCell
+        } else if indexPath.item == 4 {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "science", for: indexPath) as! ScienceCell
+        } else if indexPath.item == 5 {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "sport", for: indexPath) as! SportsCell
+        } else if indexPath.item == 6 {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "tech", for: indexPath) as! TechnologyCell
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: view.frame.width, height: view.frame.height )
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.x)
     }
 }
 
