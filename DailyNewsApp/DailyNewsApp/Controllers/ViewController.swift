@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchBarDelegate {
     
     lazy var menuBar: MenuBarCollectionView = {
         let mb = MenuBarCollectionView()
@@ -41,14 +41,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurateNavBar()
-        createSearchBar()
         view.addSubview(menuBar)
         view.addSubview(horizontalNewsCollectionView)
         updateViewConstraints()
-    }
-    
-    func createSearchBar() {
-        
     }
     
     func scrollMenu(menuIndex: Int) {
@@ -82,7 +77,8 @@ class ViewController: UIViewController {
     }
     
     @objc func searchInfo() {
-        
+        guard let searchVC = storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else { return }
+        navigationController?.pushViewController(searchVC, animated: true)
     }
     
     @objc func onButtonTapped() {
@@ -126,4 +122,3 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         CGSize(width: view.frame.width, height: view.frame.height )
     }
 }
-

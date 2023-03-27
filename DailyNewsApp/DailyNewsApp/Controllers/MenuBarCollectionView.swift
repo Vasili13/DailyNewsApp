@@ -18,7 +18,8 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
         collection.delegate = self
         collection.dataSource = self
         collection.register(MenuCell.self, forCellWithReuseIdentifier: cellID)
-        collection.isPagingEnabled = true
+        collection.showsHorizontalScrollIndicator = false
+        collection.selectItem(at: [0,0], animated: true, scrollPosition: [])
         return collection
     }()
     
@@ -26,6 +27,7 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
     private let categoryName = ["Top", "Entertainment", "Business", "Health", "Science", "Sports", "Technology"]
     
     var viewController: ViewController?
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,9 +61,14 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewController?.scrollMenu(menuIndex: indexPath.item)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0 
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 120 , height: 50)
     }
 }

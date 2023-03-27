@@ -33,9 +33,7 @@ class CategoryCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(newsTableView)
-//        fetchArticles()
         fetchInfo()
-//        fetchEntArticles()
         updateConstraints()
     }
     
@@ -56,28 +54,6 @@ class CategoryCell: UICollectionViewCell {
                  }
              }
          }
-//    private func fetchEntArticles() {
-//        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=56324ef9df0e4701a46b0b30ba67448b") else { return }
-//        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-//
-//            if let error = error {
-//                print(error)
-//            }
-//
-//            guard let data = data else { return }
-//
-//            do {
-//                let result = try JSONDecoder().decode(Response.self, from: data)
-//                print("Art:\(result.articles.count)")
-//            } catch {
-//                print(error)
-//            }
-//            DispatchQueue.main.async {
-//                self?.newsTableView.reloadData()
-//            }
-//        }
-//        task.resume()
-//    }
     
     override func updateConstraints() {
         super.updateConstraints()

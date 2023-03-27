@@ -12,20 +12,22 @@ class MenuCell: UICollectionViewCell {
     
     lazy var categoryText: UILabel = {
         let lbl = UILabel()
+        lbl.font = .systemFont(ofSize: 17, weight: .bold)
+        lbl.textAlignment = .center
         return lbl
     }()
+    
+    override var isSelected: Bool {
+        didSet {
+            backgroundColor = self.isSelected ? .blue : .white
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(categoryText)
         updateConstraints()
-    }
-    
-    override var isHighlighted: Bool {
-        didSet {
-            categoryText.textColor = isHighlighted ? UIColor.magenta : UIColor.green
-        }
     }
     
     required init?(coder: NSCoder) {
