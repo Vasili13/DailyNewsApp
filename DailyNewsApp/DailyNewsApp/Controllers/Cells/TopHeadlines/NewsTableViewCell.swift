@@ -10,13 +10,15 @@ import UIKit
 class NewsTableViewCellViewModel {
      let title: String
      let subtitle: String
+    let url: String?
      let imageURL: URL?
      var imageData: Data? = nil
 
-     init(title: String, subtitle: String, imageURL: URL?) {
+    init(title: String, subtitle: String, imageURL: URL?, url: String?) {
          self.title = title
          self.subtitle = subtitle
          self.imageURL = imageURL
+         self.url = url
      }
  }
 
@@ -24,7 +26,7 @@ class NewsTableViewCellViewModel {
 
      static let key = "NewsTableViewCell"
 
-     private let newsTitleLbl: UILabel = {
+     lazy var newsTitleLbl: UILabel = {
          let lbl = UILabel()
          lbl.numberOfLines = 0
          lbl.font = .systemFont(ofSize: 25, weight: .bold)
@@ -46,6 +48,13 @@ class NewsTableViewCellViewModel {
          imageView.backgroundColor = .secondarySystemBackground
          imageView.contentMode = .scaleAspectFill
          return imageView
+     }()
+     
+     lazy var urlTitleLbl: UILabel = {
+         let lbl = UILabel()
+         lbl.numberOfLines = 0
+         lbl.font = .systemFont(ofSize: 25, weight: .bold)
+         return lbl
      }()
 
      override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -88,6 +97,7 @@ class NewsTableViewCellViewModel {
      func configure(with viewModel: NewsTableViewCellViewModel) {
          newsTitleLbl.text = viewModel.title
          newsSubtitleLbl.text = viewModel.subtitle
+         urlTitleLbl.text = viewModel.url
 
          if let data = viewModel.imageData {
              newsImageView.image = UIImage(data: data)

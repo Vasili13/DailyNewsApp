@@ -50,7 +50,6 @@ class HealthCell: UICollectionViewCell {
                 self?.viewModels = articles.compactMap {
                     HealthTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No descr", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
-                print(articles.count)
 
                 DispatchQueue.main.async {
                     self?.businessTableView.reloadData()

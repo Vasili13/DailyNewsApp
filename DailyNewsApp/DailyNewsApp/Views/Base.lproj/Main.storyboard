@@ -53,29 +53,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJV-2c-Ce9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="668" y="-327"/>
-        </scene>
-        <!--Detailed View Controller-->
-        <scene sceneID="mkJ-4x-xIH">
-            <objects>
-                <viewController storyboardIdentifier="DetailedViewController" id="eag-4d-bQL" customClass="DetailedViewController" customModule="DailyNewsApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3fK-fQ-RBb">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRV-PM-uzg">
-                                <rect key="frame" x="159" y="409" width="75" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="ikZ-Nr-L0G"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dGu-jG-OVG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="668" y="474"/>
+            <point key="canvasLocation" x="665" y="-412"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="sgn-CZ-hD8">
@@ -106,6 +84,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Log In"/>
                                 <connections>
+                                    <action selector="logIn:" destination="92o-cy-Hjx" eventType="touchUpInside" id="76S-77-eqt"/>
                                     <segue destination="xUR-Gu-0dS" kind="show" destinationCreationSelector="logInSegue:" id="Ae6-oI-di7"/>
                                 </connections>
                             </button>
@@ -114,6 +93,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Log Up"/>
+                                <connections>
+                                    <action selector="logUp:" destination="92o-cy-Hjx" eventType="touchUpInside" id="MoK-aa-0TK"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7Fv-Zm-QVo"/>
@@ -124,10 +106,14 @@
                             <constraint firstItem="NEY-s9-hFJ" firstAttribute="leading" secondItem="7Fv-Zm-QVo" secondAttribute="leading" constant="16" id="sZ5-gG-tOd"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailTF" destination="GNy-U0-dN4" id="Ndi-3g-R4o"/>
+                        <outlet property="passwordTF" destination="ttV-eu-sAj" id="UK8-UI-BK9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="30Q-Me-ypy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1412.9770992366412" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="665" y="325"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="l21-pa-IZ2">
@@ -137,7 +123,7 @@
                 </hostingController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glY-U4-INc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2182" y="4"/>
+            <point key="canvasLocation" x="1511" y="12"/>
         </scene>
     </scenes>
     <resources>

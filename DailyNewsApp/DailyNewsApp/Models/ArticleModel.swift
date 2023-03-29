@@ -50,7 +50,6 @@ final class ApiCaller {
              } else if let data = data {
                  do {
                      let result = try JSONDecoder().decode(Response.self, from: data)
-                     print("Articles:\(result.articles.count)")
                      completion(.success(result.articles))
                  } catch {
                      completion(.failure(error))
@@ -74,7 +73,6 @@ final class ApiCaller {
             } else if let data = data {
                 do {
                     let result = try JSONDecoder().decode(Response.self, from: data)
-                    print("Articles:\(result.articles.count)")
                     completion(.success(result.articles))
                 } catch {
                     completion(.failure(error))
@@ -94,7 +92,6 @@ final class ApiCaller {
             } else if let data = data {
                 do {
                     let result = try JSONDecoder().decode(Response.self, from: data)
-                    print("Articles:\(result.articles.count)")
                     completion(.success(result.articles))
                 } catch {
                     completion(.failure(error))
@@ -152,7 +149,6 @@ final class ApiCaller {
             } else if let data = data {
                 do {
                     let result = try JSONDecoder().decode(Response.self, from: data)
-                    print("Articles:\(result.articles.count)")
                     completion(.success(result.articles))
                 } catch {
                     completion(.failure(error))
@@ -172,7 +168,6 @@ final class ApiCaller {
             } else if let data = data {
                 do {
                     let result = try JSONDecoder().decode(Response.self, from: data)
-                    print("Articles:\(result.articles.count)")
                     completion(.success(result.articles))
                 } catch {
                     completion(.failure(error))
@@ -192,7 +187,6 @@ final class ApiCaller {
             } else if let data = data {
                 do {
                     let result = try JSONDecoder().decode(Response.self, from: data)
-                    print("Articles:\(result.articles.count)")
                     completion(.success(result.articles))
                 } catch {
                     completion(.failure(error))

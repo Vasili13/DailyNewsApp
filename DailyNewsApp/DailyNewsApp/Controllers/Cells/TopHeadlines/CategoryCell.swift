@@ -10,7 +10,7 @@ import SnapKit
 import SafariServices
 
 protocol MyProtocol {
-    func loadNewScreen() -> Void
+    func loadNewScreen(url: URL) -> Void
 }
 
 class CategoryCell: UICollectionViewCell {
@@ -43,9 +43,8 @@ class CategoryCell: UICollectionViewCell {
                  case .success(let articles):
                      self?.articles = articles
                      self?.viewModels = articles.compactMap({
-                         NewsTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No descr", imageURL: URL(string: $0.urlToImage ?? ""))
+                         NewsTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No descr", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
                      })
-
                      DispatchQueue.main.async {
                          self?.newsTableView.reloadData()
                      }
@@ -85,6 +84,8 @@ extension CategoryCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.loadNewScreen()
+        print(articles[indexPath.item])
+        guard let url = URL(string: viewModels[indexPath.row].url ?? "") else { return }
+        delegate?.loadNewScreen(url: url)
     }
 }

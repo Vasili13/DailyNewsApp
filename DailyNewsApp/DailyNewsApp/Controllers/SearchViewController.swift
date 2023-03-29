@@ -21,17 +21,28 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         return table
     }()
     
+    lazy var lbl: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Here you can find articles"
+        lbl.font = .systemFont(ofSize: 23, weight: .medium)
+        lbl.textColor = .systemGray4
+        return lbl
+    }()
+    
     private let search = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Search"
         view.addSubview(searchTableView)
+        view.addSubview(lbl)
         createSearchBar()
         updateViewConstraints()
     }
     
         func createSearchBar() {
             navigationItem.searchController = search
+            navigationItem.hidesSearchBarWhenScrolling = false
             search.searchBar.delegate = self
         }
     
@@ -40,6 +51,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         searchTableView.snp.makeConstraints { make in
             make.height.width.equalToSuperview()
+        }
+        
+        lbl.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
     
@@ -55,12 +70,23 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 })
 
                 DispatchQueue.main.async {
+                    
+                    if self?.viewModel == nil {
+                        self?.lbl.isHidden = true
+                    } else {
+                        self?.lbl.text = "Sorry... Nothing found :("
+                    }
+                    
                     self?.searchTableView.reloadData()
                 }
             case .failure(let error):
                 print(error )
             }
         }
+    }
+    
+    deinit {
+        print("deinit search")
     }
 }
 

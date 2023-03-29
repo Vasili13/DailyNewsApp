@@ -26,8 +26,7 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
     private let cellID = "CellID"
     private let categoryName = ["Top", "Entertainment", "Business", "Health", "Science", "Sports", "Technology"]
     
-    var viewController: ViewController?
-    
+    weak var viewController: ViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,7 +60,6 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewController?.scrollMenu(menuIndex: indexPath.item)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

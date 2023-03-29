@@ -50,7 +50,6 @@ class EntertainmentCell: UICollectionViewCell {
                 self?.viewModels1 = articles.compactMap {
                     EntTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No descr", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
-                print(articles.count)
 
                 DispatchQueue.main.async {
                     self?.entTableView.reloadData()
@@ -60,29 +59,6 @@ class EntertainmentCell: UICollectionViewCell {
             }
         }
     }
-    
-//    private func fetchEntArticles() {
-//        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?category=business&apiKey=56324ef9df0e4701a46b0b30ba67448b") else { return }
-//        let task = URLSession.shared.dataTask(with: url) { data, _, error in
-//            if let error = error {
-//                print("ent error:\(error)")
-//            }
-//            guard let data = data else { return }
-//
-//            do {
-//                self.articles = try JSONDecoder().decode([Article].self, from: data)
-//                print(self.articles.count)
-//                print("ENT")
-//            } catch {
-//                print(error)
-//            }
-//
-//            DispatchQueue.main.async {
-//                self.entTableView.reloadData()
-//            }
-//        }
-//        task.resume()
-//    }
 }
 
 extension EntertainmentCell: UITableViewDelegate, UITableViewDataSource {

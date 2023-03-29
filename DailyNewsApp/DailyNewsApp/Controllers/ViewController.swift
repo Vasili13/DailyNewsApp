@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import SafariServices
 
-class ViewController: UIViewController, UISearchBarDelegate {
+class ViewController: UIViewController {
+    
+    var article1 = [Article]()
     
     lazy var menuBar: MenuBarCollectionView = {
         let mb = MenuBarCollectionView()
@@ -85,15 +88,18 @@ class ViewController: UIViewController, UISearchBarDelegate {
         guard let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else { return }
         navigationController?.pushViewController(loginVC, animated: true)
     }
+    
+    deinit {
+        print("deinit main")
+    }
 }
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MyProtocol {
     
-    func loadNewScreen() {
-        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController")
-        present(destination, animated: true)
+    func loadNewScreen(url: URL) {
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true)
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7
     }
@@ -115,6 +121,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         } else if indexPath.item == 6 {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "tech", for: indexPath) as! TechnologyCell
         }
+        
+        print(indexPath.item)
         return cell
     }
     
