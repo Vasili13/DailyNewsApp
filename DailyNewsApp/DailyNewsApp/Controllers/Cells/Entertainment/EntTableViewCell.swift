@@ -45,6 +45,7 @@ class EntTableViewCell: UITableViewCell {
         imageView.clipsToBounds = true
         imageView.backgroundColor = .secondarySystemBackground
         imageView.contentMode = .scaleAspectFill
+//        imageView.image = UIImage(named: "image_not_found")
         return imageView
     }()
 
@@ -88,6 +89,7 @@ class EntTableViewCell: UITableViewCell {
     func configure(with viewModel: EntTableViewCellViewModel) {
         newsTitleLbl.text = viewModel.title
         newsSubtitleLbl.text = viewModel.subtitle
+        newsImageView.image = UIImage(named: "no_image")
 
         if let data = viewModel.imageData {
             newsImageView.image = UIImage(data: data)
@@ -101,5 +103,4 @@ class EntTableViewCell: UITableViewCell {
             }.resume()
         }
     }
-
 }

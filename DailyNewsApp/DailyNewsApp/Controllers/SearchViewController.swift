@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SafariServices
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
@@ -61,28 +62,34 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text, !text.isEmpty else { return }
 
-        ApiCaller.shared.search(with: text) { [weak self] result in
+        ApiCaller.search(with: text) { [weak self] result in
+            guard let self = self else {return}
             switch result {
             case .success(let articles):
-                self?.searchedArticles = articles
-                self?.viewModel = articles.compactMap({
-                    SearchTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No descr", imageURL: URL(string: $0.urlToImage ?? ""))
+                self.searchedArticles = articles
+                self.viewModel = articles.compactMap({
+                    SearchTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
                 })
 
                 DispatchQueue.main.async {
-                    
-                    if self?.viewModel == nil {
-                        self?.lbl.isHidden = true
+                    if self.viewModel.isEmpty {
+                        self.showAlert()
                     } else {
-                        self?.lbl.text = "Sorry... Nothing found :("
+                        self.lbl.isHidden = true
+                        self.searchTableView.reloadData()
                     }
-                    
-                    self?.searchTableView.reloadData()
                 }
             case .failure(let error):
                 print(error )
             }
         }
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Nothing found", message: "Did not match any query", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        
+        present(alert, animated: true)
     }
     
     deinit {
@@ -104,5 +111,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let url = URL(string: searchedArticles[indexPath.row].url  ?? "") else { return }
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true)
     }
 }

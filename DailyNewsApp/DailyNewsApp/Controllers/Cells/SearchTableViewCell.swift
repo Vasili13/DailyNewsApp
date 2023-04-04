@@ -8,15 +8,17 @@
 import UIKit
 
 class SearchTableViewCellViewModel {
-     let title: String
-     let subtitle: String
-     let imageURL: URL?
-     var imageData: Data? = nil
+    let title: String
+    let subtitle: String
+    let url: String?
+    let imageURL: URL?
+    var imageData: Data? = nil
 
-     init(title: String, subtitle: String, imageURL: URL?) {
+    init(title: String, subtitle: String, imageURL: URL?, url: String?) {
          self.title = title
          self.subtitle = subtitle
          self.imageURL = imageURL
+        self.url = url
      }
  }
 
@@ -47,7 +49,7 @@ class SearchTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(newsTitleLbl)
@@ -88,15 +90,18 @@ class SearchTableViewCell: UITableViewCell {
     func configure(with viewModel: SearchTableViewCellViewModel) {
         newsTitleLbl.text = viewModel.title
         newsSubtitleLbl.text = viewModel.subtitle
+        newsImageView.image = UIImage(named: "no_image")
 
         if let data = viewModel.imageData {
             newsImageView.image = UIImage(data: data)
         } else if let url = viewModel.imageURL {
             URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
                 guard let data = data, error == nil else { return }
+
                 viewModel.imageData = data
                 DispatchQueue.main.async {
                     self?.newsImageView.image = UIImage(data: data)
+                    
                 }
             }.resume()
         }

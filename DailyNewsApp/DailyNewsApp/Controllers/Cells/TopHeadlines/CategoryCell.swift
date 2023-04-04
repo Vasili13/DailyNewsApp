@@ -38,12 +38,12 @@ class CategoryCell: UICollectionViewCell {
     }
     
     func fetchInfo() {
-             ApiCaller.shared.fetchArticles { [weak self] result in
+             ApiCaller.fetchArticles { [weak self] result in
                  switch result {
                  case .success(let articles):
                      self?.articles = articles
                      self?.viewModels = articles.compactMap({
-                         NewsTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No descr", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
+                         NewsTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
                      })
                      DispatchQueue.main.async {
                          self?.newsTableView.reloadData()

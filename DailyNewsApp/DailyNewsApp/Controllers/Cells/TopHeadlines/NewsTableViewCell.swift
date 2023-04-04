@@ -98,6 +98,7 @@ class NewsTableViewCellViewModel {
          newsTitleLbl.text = viewModel.title
          newsSubtitleLbl.text = viewModel.subtitle
          urlTitleLbl.text = viewModel.url
+         newsImageView.image = UIImage(named: "no_image")
 
          if let data = viewModel.imageData {
              newsImageView.image = UIImage(data: data)

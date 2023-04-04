@@ -43,12 +43,12 @@ class HealthCell: UICollectionViewCell {
     }
     
     func fetchInfo() {
-        ApiCaller.shared.fetchHealthArticles { [weak self] result in
+        ApiCaller.fetchHealthArticles { [weak self] result in
             switch result {
             case .success(let articles):
                 self?.articles = articles
                 self?.viewModels = articles.compactMap {
-                    HealthTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No descr", imageURL: URL(string: $0.urlToImage ?? ""))
+                    HealthTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
 
                 DispatchQueue.main.async {

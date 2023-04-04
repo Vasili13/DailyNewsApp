@@ -54,11 +54,13 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MenuCell
+        cell.layer.cornerRadius = 15
         cell.categoryText.text = categoryName[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         viewController?.scrollMenu(menuIndex: indexPath.item)
     }
     
@@ -67,6 +69,6 @@ class MenuBarCollectionView: UIView, UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 120 , height: 50)
+        CGSize(width: 120 , height: 40)
     }
 }

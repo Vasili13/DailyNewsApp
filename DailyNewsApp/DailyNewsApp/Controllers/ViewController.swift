@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 import SafariServices
+import FirebaseAuth
+import FirebaseDatabase
 
 class ViewController: UIViewController {
+    
+    var ref: DatabaseReference!
+    var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle!
     
     var article1 = [Article]()
     
@@ -25,13 +30,13 @@ class ViewController: UIViewController {
         layout.minimumLineSpacing = 0
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(CategoryCell.self, forCellWithReuseIdentifier: "cell")
-        cv.register(EntertainmentCell.self, forCellWithReuseIdentifier: "entCell")
-        cv.register(BusinessCell.self, forCellWithReuseIdentifier: "business")
-        cv.register(HealthCell.self, forCellWithReuseIdentifier: "health")
-        cv.register(ScienceCell.self, forCellWithReuseIdentifier: "science")
-        cv.register(SportsCell.self, forCellWithReuseIdentifier: "sport")
-        cv.register(TechnologyCell.self, forCellWithReuseIdentifier: "tech")
+        cv.register(CategoryCell.self, forCellWithReuseIdentifier: topCellId)
+        cv.register(EntertainmentCell.self, forCellWithReuseIdentifier: environmentCellId)
+        cv.register(BusinessCell.self, forCellWithReuseIdentifier: businessCellId)
+        cv.register(HealthCell.self, forCellWithReuseIdentifier: healthCellId)
+        cv.register(ScienceCell.self, forCellWithReuseIdentifier: scienceCellId)
+        cv.register(SportsCell.self, forCellWithReuseIdentifier: sportsCellId)
+        cv.register(TechnologyCell.self, forCellWithReuseIdentifier: technologyCellId)
         
         cv.dataSource = self
         cv.delegate = self
@@ -39,13 +44,22 @@ class ViewController: UIViewController {
         return cv
     }()
     
-    let cellId = "cell"
+    private let topCellId = "topCellId"
+    private let environmentCellId = "environmentCellId"
+    private let businessCellId = "businessCellId"
+    private let healthCellId = "healthCellId"
+    private let scienceCellId = "scienceCellId"
+    private let sportsCellId = "sportsCellId"
+    private let technologyCellId = "technologyCellId"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configurateNavBar()
         view.addSubview(menuBar)
         view.addSubview(horizontalNewsCollectionView)
+        
+        ref = Database.database().reference(withPath: "users")
+        
         updateViewConstraints()
     }
     
@@ -68,14 +82,13 @@ class ViewController: UIViewController {
         
         menuBar.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.top.equalTo(100)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(50)
         }
         
         horizontalNewsCollectionView.snp.makeConstraints { make in
-            make.width.equalToSuperview()
-            make.height.equalToSuperview()
-            make.top.equalTo(menuBar).offset(50)
+            make.width.height.equalToSuperview()
+            make.top.equalTo(menuBar.snp.bottom)
         }
     }
     
@@ -85,8 +98,13 @@ class ViewController: UIViewController {
     }
     
     @objc func onButtonTapped() {
-        guard let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else { return }
-        navigationController?.pushViewController(loginVC, animated: true)
+        if FirebaseAuth.Auth.auth().currentUser == nil {
+            guard let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else { return }
+            navigationController?.pushViewController(loginVC, animated: true)
+        } else {
+            guard let userVC = storyboard?.instantiateViewController(withIdentifier: "UserViewController") as? UserViewController else { return }
+            navigationController?.pushViewController(userVC, animated: true)
+        }
     }
     
     deinit {
@@ -105,24 +123,24 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CategoryCell
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: topCellId, for: indexPath) as! CategoryCell
         cell.delegate = self
         
         if indexPath.item == 1 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "entCell", for: indexPath) as! EntertainmentCell
+            return collectionView.dequeueReusableCell(withReuseIdentifier: environmentCellId, for: indexPath) as! EntertainmentCell
         } else if indexPath.item == 2 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "business", for: indexPath) as! BusinessCell
+            return collectionView.dequeueReusableCell(withReuseIdentifier: businessCellId, for: indexPath) as! BusinessCell
         } else if indexPath.item == 3 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "health", for: indexPath) as! HealthCell
+            return collectionView.dequeueReusableCell(withReuseIdentifier: healthCellId, for: indexPath) as! HealthCell
         } else if indexPath.item == 4 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "science", for: indexPath) as! ScienceCell
+            return collectionView.dequeueReusableCell(withReuseIdentifier: scienceCellId, for: indexPath) as! ScienceCell
         } else if indexPath.item == 5 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "sport", for: indexPath) as! SportsCell
+            return collectionView.dequeueReusableCell(withReuseIdentifier: sportsCellId, for: indexPath) as! SportsCell
         } else if indexPath.item == 6 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "tech", for: indexPath) as! TechnologyCell
+            return collectionView.dequeueReusableCell(withReuseIdentifier: technologyCellId, for: indexPath) as! TechnologyCell
         }
         
-        print(indexPath.item)
         return cell
     }
     

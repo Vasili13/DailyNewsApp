@@ -89,6 +89,7 @@ class ScienceTableViewCell: UITableViewCell {
     func configure(with viewModel: ScienceTableViewCellViewModel) {
         newsTitleLbl.text = viewModel.title
         newsSubtitleLbl.text = viewModel.subtitle
+        newsImageView.image = UIImage(named: "no_image")
 
         if let data = viewModel.imageData {
             newsImageView.image = UIImage(data: data)

@@ -14,12 +14,14 @@ class MenuCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.font = .systemFont(ofSize: 17, weight: .bold)
         lbl.textAlignment = .center
+        lbl.alpha = 0.5
         return lbl
     }()
     
     override var isSelected: Bool {
         didSet {
-            backgroundColor = self.isSelected ? .blue : .white
+            categoryText.alpha = self.isSelected ? 1 : 0.5
+            backgroundColor = self.isSelected ? .systemBlue.withAlphaComponent(0.7) : .white
         }
     }
     

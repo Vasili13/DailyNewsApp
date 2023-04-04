@@ -19,9 +19,7 @@
 		9E59C67D29BDF07A00F69204 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E59C67C29BDF07A00F69204 /* Assets.xcassets */; };
 		9E59C68029BDF07A00F69204 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E59C67E29BDF07A00F69204 /* LaunchScreen.storyboard */; };
 		9EA11AFF29C799C800135EF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9EA11AFE29C799C800135EF7 /* SnapKit */; };
-		9EB1C61029CB992B00476732 /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C60F29CB992B00476732 /* DetailedViewController.swift */; };
 		9EB1C61229CC94CC00476732 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C61129CC94CC00476732 /* LoginViewController.swift */; };
-		9EB1C61429CC9B6800476732 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C61329CC9B6800476732 /* UserProfile.swift */; };
 		9EB1C61629CC9D1900476732 /* EntertainmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C61529CC9D1900476732 /* EntertainmentCell.swift */; };
 		9EB1C61829CCA6CD00476732 /* EntTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C61729CCA6CD00476732 /* EntTableViewCell.swift */; };
 		9EB1C61D29CDDDA400476732 /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C61C29CDDDA400476732 /* BusinessCell.swift */; };
@@ -42,7 +40,8 @@
 		9EB1C64029D3049500476732 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB1C63F29D3049500476732 /* FirebaseDatabaseSwift */; };
 		9EB1C64229D3049500476732 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB1C64129D3049500476732 /* FirebaseStorage */; };
 		9EB1C64429D3073B00476732 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C64329D3073B00476732 /* UserModel.swift */; };
-		9EB1C64629D3150700476732 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C64529D3150700476732 /* ImagePicker.swift */; };
+		9EB1C64829D4D5BB00476732 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C64729D4D5BB00476732 /* RegistrationViewController.swift */; };
+		9EB1C64A29D4DA8600476732 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1C64929D4DA8600476732 /* UserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,9 +58,7 @@
 		9E59C67C29BDF07A00F69204 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E59C67F29BDF07A00F69204 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E59C68129BDF07A00F69204 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9EB1C60F29CB992B00476732 /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
 		9EB1C61129CC94CC00476732 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		9EB1C61329CC9B6800476732 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		9EB1C61529CC9D1900476732 /* EntertainmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntertainmentCell.swift; sourceTree = "<group>"; };
 		9EB1C61729CCA6CD00476732 /* EntTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntTableViewCell.swift; sourceTree = "<group>"; };
 		9EB1C61C29CDDDA400476732 /* BusinessCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
@@ -78,7 +75,8 @@
 		9EB1C63629D0902100476732 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		9EB1C63829D2FBE700476732 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9EB1C64329D3073B00476732 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		9EB1C64529D3150700476732 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		9EB1C64729D4D5BB00476732 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		9EB1C64929D4DA8600476732 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,11 +163,10 @@
 			children = (
 				9E59C67729BDF07A00F69204 /* ViewController.swift */,
 				9E11898829C8E4FA0097A36C /* MenuBarCollectionView.swift */,
-				9EB1C60F29CB992B00476732 /* DetailedViewController.swift */,
-				9EB1C61129CC94CC00476732 /* LoginViewController.swift */,
-				9EB1C61329CC9B6800476732 /* UserProfile.swift */,
-				9EB1C64529D3150700476732 /* ImagePicker.swift */,
 				9EB1C63429D07DB800476732 /* SearchViewController.swift */,
+				9EB1C61129CC94CC00476732 /* LoginViewController.swift */,
+				9EB1C64729D4D5BB00476732 /* RegistrationViewController.swift */,
+				9EB1C64929D4DA8600476732 /* UserViewController.swift */,
 				9E1189D429CB3DC10097A36C /* Cells */,
 			);
 			path = Controllers;
@@ -334,7 +331,6 @@
 				9E59C67829BDF07A00F69204 /* ViewController.swift in Sources */,
 				9EB1C63129CDF30B00476732 /* TechnologyCell.swift in Sources */,
 				9EB1C62E29CDF0EA00476732 /* SportsCell.swift in Sources */,
-				9EB1C64629D3150700476732 /* ImagePicker.swift in Sources */,
 				9E1189AF29CA15B40097A36C /* MenuCell.swift in Sources */,
 				9EB1C63329CDF31F00476732 /* TechnologyTableViewCell.swift in Sources */,
 				9E1189D829CB44420097A36C /* NewsTableViewCell.swift in Sources */,
@@ -343,15 +339,15 @@
 				9EB1C62929CDED1700476732 /* ScienceTableViewCell.swift in Sources */,
 				9EB1C61F29CDDDBB00476732 /* BusinessTableViewCell.swift in Sources */,
 				9EB1C61829CCA6CD00476732 /* EntTableViewCell.swift in Sources */,
+				9EB1C64829D4D5BB00476732 /* RegistrationViewController.swift in Sources */,
 				9E59C67629BDF07A00F69204 /* SceneDelegate.swift in Sources */,
 				9EB1C62729CDED0900476732 /* ScienceCell.swift in Sources */,
 				9EB1C61D29CDDDA400476732 /* BusinessCell.swift in Sources */,
-				9EB1C61429CC9B6800476732 /* UserProfile.swift in Sources */,
 				9EB1C62429CDE2EB00476732 /* HealthCell.swift in Sources */,
-				9EB1C61029CB992B00476732 /* DetailedViewController.swift in Sources */,
 				9EB1C62C29CDF0DC00476732 /* SportsTableViewCell.swift in Sources */,
 				9EB1C64429D3073B00476732 /* UserModel.swift in Sources */,
 				9EB1C63529D07DB800476732 /* SearchViewController.swift in Sources */,
+				9EB1C64A29D4DA8600476732 /* UserViewController.swift in Sources */,
 				9EB1C63729D0902100476732 /* SearchTableViewCell.swift in Sources */,
 				9E11898929C8E4FA0097A36C /* MenuBarCollectionView.swift in Sources */,
 				9E1189D629CB40110097A36C /* ArticleModel.swift in Sources */,

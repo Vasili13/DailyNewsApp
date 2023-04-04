@@ -42,12 +42,12 @@ class TechnologyCell: UICollectionViewCell {
     }
     
     func fetchInfo() {
-        ApiCaller.shared.fetchTechArticles { [weak self] result in
+        ApiCaller.fetchTechArticles { [weak self] result in
             switch result {
             case .success(let articles):
                 self?.articles = articles
                 self?.viewModels = articles.compactMap {
-                    TechnologyTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No descr", imageURL: URL(string: $0.urlToImage ?? ""))
+                    TechnologyTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
 
                 DispatchQueue.main.async {

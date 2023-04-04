@@ -26,7 +26,7 @@ struct Source: Codable {
 
 final class ApiCaller {
 
-     static let shared = ApiCaller()
+//     static let shared = ApiCaller()
 
      struct Constants {
          static let topHeadlinesURL = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=56324ef9df0e4701a46b0b30ba67448b")
@@ -41,7 +41,7 @@ final class ApiCaller {
 
      private init() {}
 
-     public func fetchArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
+     static func fetchArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
          guard let url = Constants.topHeadlinesURL else { return }
 
          let task = URLSession.shared.dataTask(with: url) { data, _, error in
@@ -60,7 +60,7 @@ final class ApiCaller {
          task.resume()
      }
     
-    public func search(with query: String, completion: @escaping(Result<[Article], Error>) -> Void) {
+    static func search(with query: String, completion: @escaping(Result<[Article], Error>) -> Void) {
         guard !query.trimmingCharacters(in: .whitespaces).isEmpty else { return }
         
         let urlString = Constants.searchURL + query
@@ -83,7 +83,7 @@ final class ApiCaller {
         task.resume()
     }
     
-    public func fetchEntArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
+    static func fetchEntArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
         guard let url = Constants.entUrl else { return }
 
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
@@ -98,11 +98,10 @@ final class ApiCaller {
                 }
             }
         }
-
         task.resume()
     }
     
-    public func fetchBusinessArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
+    static func fetchBusinessArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
         guard let url = Constants.businessURl else { return }
 
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
@@ -121,7 +120,7 @@ final class ApiCaller {
         task.resume()
     }
     
-    public func fetchHealthArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
+    static func fetchHealthArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
         guard let url = Constants.healthURL else { return }
 
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
@@ -140,7 +139,7 @@ final class ApiCaller {
         task.resume()
     }
     
-    public func fetchScienceArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
+    static func fetchScienceArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
         guard let url = Constants.scienceURl else { return }
 
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
@@ -159,7 +158,7 @@ final class ApiCaller {
         task.resume()
     }
     
-    public func fetchSportArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
+    static func fetchSportArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
         guard let url = Constants.sportURL else { return }
 
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
@@ -178,7 +177,7 @@ final class ApiCaller {
         task.resume()
     }
     
-    public func fetchTechArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
+    static func fetchTechArticles(completion: @escaping(Result<[Article], Error>) -> Void) {
         guard let url = Constants.techUrl else { return }
 
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
