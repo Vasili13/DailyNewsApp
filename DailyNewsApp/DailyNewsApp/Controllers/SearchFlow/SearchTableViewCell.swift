@@ -97,11 +97,9 @@ class SearchTableViewCell: UITableViewCell {
         } else if let url = viewModel.imageURL {
             URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
                 guard let data = data, error == nil else { return }
-
                 viewModel.imageData = data
                 DispatchQueue.main.async {
                     self?.newsImageView.image = UIImage(data: data)
-                    
                 }
             }.resume()
         }

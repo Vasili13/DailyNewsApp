@@ -5,12 +5,11 @@
 //  Created by Василий Вырвич on 26.03.23.
 //
 
-import UIKit
-import SnapKit
 import SafariServices
+import SnapKit
+import UIKit
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
-    
     var searchedArticles = [Article]()
     var viewModel = [SearchTableViewCellViewModel]()
 
@@ -41,11 +40,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         updateViewConstraints()
     }
     
-        func createSearchBar() {
-            navigationItem.searchController = search
-            navigationItem.hidesSearchBarWhenScrolling = false
-            search.searchBar.delegate = self
-        }
+    func createSearchBar() {
+        navigationItem.searchController = search
+        navigationItem.hidesSearchBarWhenScrolling = false
+        search.searchBar.delegate = self
+    }
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -62,14 +61,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text, !text.isEmpty else { return }
 
-        ApiCaller.search(with: text) { [weak self] result in
-            guard let self = self else {return}
+        NetworkService.search(with: text) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let articles):
                 self.searchedArticles = articles
-                self.viewModel = articles.compactMap({
+                self.viewModel = articles.compactMap {
                     SearchTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
-                })
+                }
 
                 DispatchQueue.main.async {
                     if self.viewModel.isEmpty {
@@ -80,7 +79,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                     }
                 }
             case .failure(let error):
-                print(error )
+                print(error)
             }
         }
     }
@@ -91,14 +90,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         present(alert, animated: true)
     }
-    
-    deinit {
-        print("deinit search")
-    }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         searchedArticles.count
     }
@@ -114,7 +108,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = URL(string: searchedArticles[indexPath.row].url  ?? "") else { return }
+        guard let url = URL(string: searchedArticles[indexPath.row].url ?? "") else { return }
         let vc = SFSafariViewController(url: url)
         present(vc, animated: true)
     }

@@ -5,30 +5,19 @@
 //  Created by Василий Вырвич on 23.03.23.
 //
 
-import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 import SnapKit
 import SwiftUI
-import FirebaseDatabase
-import FirebaseAuth
+import UIKit
 
 class LoginViewController: UIViewController {
-    
-//    var ref: DatabaseReference!
-//    var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle!
 
-    @IBOutlet weak var emailTF: UITextField!
-    @IBOutlet weak var passwordTF: UITextField!
+    @IBOutlet var emailTF: UITextField!
+    @IBOutlet var passwordTF: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        ref = Database.database().reference(withPath: "users")
-//
-//        authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
-//            guard let _ = user else {
-//                return
-//            }
-//
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,11 +34,10 @@ class LoginViewController: UIViewController {
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] user, error in
             guard let self = self else { return }
             if let error {
-                print(error.localizedDescription)
-            } else if let _ = user {
-                print(email)
-                print("user exist")
-                self.navigationController?.dismiss(animated: true)
+                presentAlert(text: error.localizedDescription)
+            } else if let user = user {
+                guard let userVC = self.storyboard?.instantiateViewController(withIdentifier: "UserViewController") as? UserViewController else { return }
+                self.navigationController?.pushViewController(userVC, animated: true)
             }
             
         }
@@ -58,5 +46,11 @@ class LoginViewController: UIViewController {
     @IBAction func logUp(_ sender: Any) {
         guard let regVC = storyboard?.instantiateViewController(withIdentifier: "RegistrationViewController") as? RegistrationViewController else { return }
         navigationController?.pushViewController(regVC, animated: true)
+    }
+    
+    private func presentAlert(text: String) {
+        let alert = UIAlertController(title: "Somthing went wrong :(", message: text, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alert, animated: true)
     }
 }

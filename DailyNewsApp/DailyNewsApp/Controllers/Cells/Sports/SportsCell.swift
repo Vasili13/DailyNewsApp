@@ -5,11 +5,11 @@
 //  Created by Василий Вырвич on 24.03.23.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class SportsCell: UICollectionViewCell {
-    
+    var delegate: LoadSafariProtocol?
     var articles = [Article]()
     var viewModels = [SportsTableViewCellViewModel]()
     
@@ -38,17 +38,18 @@ class SportsCell: UICollectionViewCell {
         }
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func fetchInfo() {
-        ApiCaller.fetchSportArticles { [weak self] result in
+        NetworkService.fetchSportArticles { [weak self] result in
             switch result {
             case .success(let articles):
                 self?.articles = articles
                 self?.viewModels = articles.compactMap {
-                    SportsTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""))
+                    SportsTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
                 }
 
                 DispatchQueue.main.async {
@@ -62,13 +63,12 @@ class SportsCell: UICollectionViewCell {
 }
 
 extension SportsCell: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SportsTableViewCell.key, for: indexPath) as? SportsTableViewCell else {fatalError()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SportsTableViewCell.key, for: indexPath) as? SportsTableViewCell else { fatalError() }
         cell.configure(with: viewModels[indexPath.row])
         return cell
     }
@@ -77,4 +77,8 @@ extension SportsCell: UITableViewDelegate, UITableViewDataSource {
         return 150
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let url = URL(string: viewModels[indexPath.row].url ?? "") else { return }
+        delegate?.loadNewScreen(url: url)
+    }
 }

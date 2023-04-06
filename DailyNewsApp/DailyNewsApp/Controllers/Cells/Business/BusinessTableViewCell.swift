@@ -8,20 +8,21 @@
 import UIKit
 
 class BusinessTableViewCellViewModel {
-     let title: String
-     let subtitle: String
-     let imageURL: URL?
-     var imageData: Data? = nil
+    let title: String
+    let subtitle: String
+    let url: String?
+    let imageURL: URL?
+    var imageData: Data?
 
-     init(title: String, subtitle: String, imageURL: URL?) {
-         self.title = title
-         self.subtitle = subtitle
-         self.imageURL = imageURL
-     }
+    init(title: String, subtitle: String, imageURL: URL?, url: String?) {
+        self.title = title
+        self.subtitle = subtitle
+        self.imageURL = imageURL
+        self.url = url
+    }
 }
 
 class BusinessTableViewCell: UITableViewCell {
-
     static let key = "BusinessTableViewCell"
 
     private let newsTitleLbl: UILabel = {
@@ -48,6 +49,13 @@ class BusinessTableViewCell: UITableViewCell {
         return imageView
     }()
 
+    lazy var urlTitleLbl: UILabel = {
+        let lbl = UILabel()
+        lbl.numberOfLines = 0
+        lbl.font = .systemFont(ofSize: 25, weight: .bold)
+        return lbl
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(newsTitleLbl)
@@ -55,6 +63,7 @@ class BusinessTableViewCell: UITableViewCell {
         contentView.addSubview(newsImageView)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -68,14 +77,14 @@ class BusinessTableViewCell: UITableViewCell {
                                     height: 70)
 
         newsSubtitleLbl.frame = CGRect(x: 10,
-                                    y: 70,
-                                    width: contentView.frame.size.width - 170,
-                                    height: contentView.frame.size.height/2)
+                                       y: 70,
+                                       width: contentView.frame.size.width - 170,
+                                       height: contentView.frame.size.height / 2)
 
         newsImageView.frame = CGRect(x: contentView.frame.size.width - 150,
-                                    y: 5,
-                                    width: 145,
-                                    height: contentView.frame.size.height - 10)
+                                     y: 5,
+                                     width: 145,
+                                     height: contentView.frame.size.height - 10)
     }
 
     override func prepareForReuse() {
@@ -88,6 +97,7 @@ class BusinessTableViewCell: UITableViewCell {
     func configure(with viewModel: BusinessTableViewCellViewModel) {
         newsTitleLbl.text = viewModel.title
         newsSubtitleLbl.text = viewModel.subtitle
+        urlTitleLbl.text = viewModel.url
         newsImageView.image = UIImage(named: "no_image")
 
         if let data = viewModel.imageData {
@@ -102,5 +112,4 @@ class BusinessTableViewCell: UITableViewCell {
             }.resume()
         }
     }
-
 }

@@ -9,19 +9,17 @@ import Foundation
 import UIKit
 
 class MenuCell: UICollectionViewCell {
-    
     lazy var categoryText: UILabel = {
         let lbl = UILabel()
         lbl.font = .systemFont(ofSize: 17, weight: .bold)
         lbl.textAlignment = .center
-        lbl.alpha = 0.5
         return lbl
     }()
     
     override var isSelected: Bool {
         didSet {
-            categoryText.alpha = self.isSelected ? 1 : 0.5
-            backgroundColor = self.isSelected ? .systemBlue.withAlphaComponent(0.7) : .white
+            categoryText.textColor = self.isSelected ? UIColor.white : UIColor.black
+            backgroundColor = self.isSelected ? .systemBlue : .white
         }
     }
     
@@ -32,6 +30,7 @@ class MenuCell: UICollectionViewCell {
         updateConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
