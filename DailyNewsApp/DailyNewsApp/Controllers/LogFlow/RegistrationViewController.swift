@@ -29,6 +29,7 @@ class RegistrationViewController: UIViewController {
 
         FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] user, error in
             guard let self = self else { return }
+            
             if let error = error {
                 presentAlert(text: error.localizedDescription)
             } else {

@@ -49,7 +49,7 @@ class LoginViewController: UIViewController {
     }
     
     private func presentAlert(text: String) {
-        let alert = UIAlertController(title: "Somthing went wrong :(", message: text, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Something went wrong :(", message: text, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         present(alert, animated: true)
     }

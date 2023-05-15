@@ -80,24 +80,30 @@ class UserViewController: UIViewController {
     }
     
     @IBAction func logOut(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-        } catch {
-            print(error.localizedDescription)
-        }
-        navigationController?.popToRootViewController(animated: true)
+        let alert = UIAlertController(title: "Are you sure?", message: "Log out of your account?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+            do {
+                try Auth.auth().signOut()
+            } catch {
+                print(error.localizedDescription)
+            }
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .default))
+        present(alert, animated: true)
     }
     
     
     @IBAction func deleteAccount(_ sender: Any) {
-        let user = Auth.auth().currentUser
-        user?.delete { error in
-          if let error = error {
-            // An error happened.
-          } else {
-            // Account deleted.
-          }
-        }
+        
+        let alert = UIAlertController(title: "Are you sure?", message: "Delete account?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+            let user = Auth.auth().currentUser
+            user?.delete()
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .default))
+        present(alert, animated: true)
     }
 }
 
