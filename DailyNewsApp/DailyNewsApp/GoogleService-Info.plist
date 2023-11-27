@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>713584384119-cqeor5okhmc3h3fc6p9i6em4mo2qcbgh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.713584384119-cqeor5okhmc3h3fc6p9i6em4mo2qcbgh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAh9IuE-MWij7HV8kXSGnIHbVacm_uforU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>713584384119</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.i39.DailyNewsApp</string>
+	<key>PROJECT_ID</key>
+	<string>dailynewsapp-bda0a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dailynewsapp-bda0a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:713584384119:ios:ddbf0e1a59940259d80e72</string>
+	<key>DATABASE_URL</key>
+	<string>https://dailynewsapp-bda0a-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
