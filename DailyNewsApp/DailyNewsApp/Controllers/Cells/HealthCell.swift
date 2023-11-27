@@ -1,22 +1,22 @@
 //
-//  EntertainmentCell.swift
+//  HealthCell.swift
 //  DailyNewsApp
 //
-//  Created by Василий Вырвич on 23.03.23.
+//  Created by Василий Вырвич on 24.03.23.
 //
 
 import SnapKit
 import UIKit
 
-class EntertainmentCell: UICollectionViewCell {
+final class HealthCell: UICollectionViewCell {
     
     var delegate: LoadSafariProtocol?
-    var articles = [Article]()
-    var viewModels1 = [EntTableViewCellViewModel]()
+    private var articlesList = [Article]()
+    private var viewModel = [CustomTableViewCellViewModel]()
     
-    lazy var entTableView: UITableView = {
+    lazy var businessTableView: UITableView = {
         let table = UITableView(frame: .zero)
-        table.register(EntTableViewCell.self, forCellReuseIdentifier: EntTableViewCell.key)
+        table.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.key)
         table.delegate = self
         table.dataSource = self
         return table
@@ -26,15 +26,13 @@ class EntertainmentCell: UICollectionViewCell {
         super.init(frame: frame)
         
         fetchInfo()
-    
-        addSubview(entTableView)
-        
+        addSubview(businessTableView)
         updateConstraints()
     }
     
     override func updateConstraints() {
         super.updateConstraints()
-        entTableView.snp.makeConstraints { make in
+        businessTableView.snp.makeConstraints { make in
             make.height.width.equalToSuperview()
         }
     }
@@ -44,17 +42,17 @@ class EntertainmentCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fetchInfo() {
-        NetworkService.fetchEntArticles { [weak self] result in
+    private func fetchInfo() {
+        NetworkService.fetchHealthArticles { [weak self] result in
             switch result {
             case .success(let articles):
-                self?.articles = articles
-                self?.viewModels1 = articles.compactMap {
-                    EntTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
+                self?.articlesList = articles
+                self?.viewModel = articles.compactMap {
+                    CustomTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", url: $0.url ?? "", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
 
                 DispatchQueue.main.async {
-                    self?.entTableView.reloadData()
+                    self?.businessTableView.reloadData()
                 }
             case .failure(let error):
                 print(error)
@@ -63,14 +61,14 @@ class EntertainmentCell: UICollectionViewCell {
     }
 }
 
-extension EntertainmentCell: UITableViewDelegate, UITableViewDataSource {
+extension HealthCell: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModels1.count
+        viewModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: EntTableViewCell.key, for: indexPath) as? EntTableViewCell else { fatalError() }
-        cell.configure(with: viewModels1[indexPath.row])
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.key, for: indexPath) as? CustomTableViewCell else { fatalError() }
+        cell.configure(with: viewModel[indexPath.row])
         return cell
     }
     
@@ -79,7 +77,7 @@ extension EntertainmentCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = URL(string: viewModels1[indexPath.row].url ?? "") else { return }
+        guard let url = URL(string: viewModel[indexPath.row].url ?? "") else { return }
         delegate?.loadNewScreen(url: url)
     }
 }

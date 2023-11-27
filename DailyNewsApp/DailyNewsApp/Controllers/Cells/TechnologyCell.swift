@@ -1,21 +1,21 @@
 //
-//  HealthCell.swift
+//  TechnologyCell.swift
 //  DailyNewsApp
 //
 //  Created by Василий Вырвич on 24.03.23.
 //
 
-import SnapKit
 import UIKit
 
-class HealthCell: UICollectionViewCell {
+final class TechnologyCell: UICollectionViewCell {
+    
     var delegate: LoadSafariProtocol?
-    var articles = [Article]()
-    var viewModels = [HealthTableViewCellViewModel]()
+    private var articlesList = [Article]()
+    private var viewModel = [CustomTableViewCellViewModel]()
     
     lazy var businessTableView: UITableView = {
         let table = UITableView(frame: .zero)
-        table.register(HealthTableViewCell.self, forCellReuseIdentifier: HealthTableViewCell.key)
+        table.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.key)
         table.delegate = self
         table.dataSource = self
         return table
@@ -43,13 +43,13 @@ class HealthCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fetchInfo() {
-        NetworkService.fetchHealthArticles { [weak self] result in
+    private func fetchInfo() {
+        NetworkService.fetchTechArticles { [weak self] result in
             switch result {
             case .success(let articles):
-                self?.articles = articles
-                self?.viewModels = articles.compactMap {
-                    HealthTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
+                self?.articlesList = articles
+                self?.viewModel = articles.compactMap {
+                    CustomTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", url: $0.url ?? "", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
 
                 DispatchQueue.main.async {
@@ -62,14 +62,14 @@ class HealthCell: UICollectionViewCell {
     }
 }
 
-extension HealthCell: UITableViewDataSource, UITableViewDelegate {
+extension TechnologyCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModels.count
+        viewModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: HealthTableViewCell.key, for: indexPath) as? HealthTableViewCell else { fatalError() }
-        cell.configure(with: viewModels[indexPath.row])
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.key, for: indexPath) as? CustomTableViewCell else { fatalError() }
+        cell.configure(with: viewModel[indexPath.row])
         return cell
     }
     
@@ -78,7 +78,7 @@ extension HealthCell: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = URL(string: viewModels[indexPath.row].url ?? "") else { return }
+        guard let url = URL(string: viewModel[indexPath.row].url ?? "") else { return }
         delegate?.loadNewScreen(url: url)
     }
 }

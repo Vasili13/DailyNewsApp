@@ -11,7 +11,7 @@ import FirebaseStorage
 import SnapKit
 import UIKit
 
-class UserViewController: UIViewController {
+final class UserViewController: UIViewController {
     
     @IBOutlet var userImage: UIImageView!
     @IBOutlet var nameLabel: UILabel!
@@ -110,6 +110,7 @@ class UserViewController: UIViewController {
 //-MARK: ImagePicker
 
 extension UserViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     private func presentPhotoAlert() {
         let alert = UIAlertController(title: "User Image", message: "How would you ike to select a picture", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))

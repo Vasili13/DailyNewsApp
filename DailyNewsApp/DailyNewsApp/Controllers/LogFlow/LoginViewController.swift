@@ -11,7 +11,7 @@ import SnapKit
 import SwiftUI
 import UIKit
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
 
     @IBOutlet var emailTF: UITextField!
     @IBOutlet var passwordTF: UITextField!

@@ -9,13 +9,14 @@ import SafariServices
 import SnapKit
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
-    var searchedArticles = [Article]()
-    var viewModel = [SearchTableViewCellViewModel]()
+final class SearchViewController: UIViewController, UISearchBarDelegate {
+    
+    private var searchedArticlesList = [Article]()
+    private var viewModel = [CustomTableViewCellViewModel]()
 
     lazy var searchTableView: UITableView = {
         let table = UITableView(frame: .zero)
-        table.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.key)
+        table.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.key)
         table.delegate = self
         table.dataSource = self
         return table
@@ -33,14 +34,18 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Search"
-        view.addSubview(searchTableView)
-        view.addSubview(lbl)
+        setUpView()
         createSearchBar()
         updateViewConstraints()
     }
     
-    func createSearchBar() {
+    private func setUpView() {
+        title = "Search"
+        view.addSubview(searchTableView)
+        view.addSubview(lbl)
+    }
+    
+    private func createSearchBar() {
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
         search.searchBar.delegate = self
@@ -65,9 +70,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             guard let self = self else { return }
             switch result {
             case .success(let articles):
-                self.searchedArticles = articles
+                self.searchedArticlesList = articles
                 self.viewModel = articles.compactMap {
-                    SearchTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
+                    CustomTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", url: $0.url ?? "", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
 
                 DispatchQueue.main.async {
@@ -92,13 +97,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
 }
 
+// MARK: - TableView delegate and DataSource
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        searchedArticles.count
+        searchedArticlesList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.key, for: indexPath) as? SearchTableViewCell else { fatalError() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.key, for: indexPath) as? CustomTableViewCell else { fatalError() }
         cell.configure(with: viewModel[indexPath.row])
         return cell
     }
@@ -108,8 +115,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = URL(string: searchedArticles[indexPath.row].url ?? "") else { return }
+        guard let url = URL(string: searchedArticlesList[indexPath.row].url ?? "") else { return }
         let vc = SFSafariViewController(url: url)
         present(vc, animated: true)
     }
+    
 }

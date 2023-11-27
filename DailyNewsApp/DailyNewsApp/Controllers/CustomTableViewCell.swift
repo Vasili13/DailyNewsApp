@@ -1,31 +1,33 @@
 //
-//  EntTableViewCell.swift
+//  CustomTableViewCell.swift
 //  DailyNewsApp
 //
-//  Created by Василий Вырвич on 23.03.23.
+//  Created by Василий Вырвич on 26.11.23.
 //
 
 import UIKit
 
-class EntTableViewCellViewModel {
+final class CustomTableViewCellViewModel {
     let title: String
     let subtitle: String
     let url: String?
     let imageURL: URL?
     var imageData: Data?
-
-    init(title: String, subtitle: String, imageURL: URL?, url: String?) {
+    
+    init(title: String, subtitle: String, url: String?, imageURL: URL?, imageData: Data? = nil) {
         self.title = title
         self.subtitle = subtitle
-        self.imageURL = imageURL
         self.url = url
+        self.imageURL = imageURL
+        self.imageData = imageData
     }
 }
 
-class EntTableViewCell: UITableViewCell {
-    static let key = "EntTableViewCell"
+final class CustomTableViewCell: UITableViewCell {
 
-    private let newsTitleLbl: UILabel = {
+    static let key = "CustomTableViewCell"
+
+    lazy var newsTitleLbl: UILabel = {
         let lbl = UILabel()
         lbl.numberOfLines = 0
         lbl.font = .systemFont(ofSize: 25, weight: .bold)
@@ -94,7 +96,7 @@ class EntTableViewCell: UITableViewCell {
         newsImageView.image = nil
     }
 
-    func configure(with viewModel: EntTableViewCellViewModel) {
+    func configure(with viewModel: CustomTableViewCellViewModel) {
         newsTitleLbl.text = viewModel.title
         newsSubtitleLbl.text = viewModel.subtitle
         urlTitleLbl.text = viewModel.url
@@ -112,4 +114,5 @@ class EntTableViewCell: UITableViewCell {
             }.resume()
         }
     }
+
 }

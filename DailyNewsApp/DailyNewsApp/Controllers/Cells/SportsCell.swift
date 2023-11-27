@@ -1,5 +1,5 @@
 //
-//  BusinessCell.swift
+//  SportsCell.swift
 //  DailyNewsApp
 //
 //  Created by Василий Вырвич on 24.03.23.
@@ -8,14 +8,15 @@
 import SnapKit
 import UIKit
 
-class BusinessCell: UICollectionViewCell {
+final class SportsCell: UICollectionViewCell {
+    
     var delegate: LoadSafariProtocol?
-    var articles = [Article]()
-    var viewModels = [BusinessTableViewCellViewModel]()
+    private var articlesList = [Article]()
+    private var viewModel = [CustomTableViewCellViewModel]()
     
     lazy var businessTableView: UITableView = {
         let table = UITableView(frame: .zero)
-        table.register(BusinessTableViewCell.self, forCellReuseIdentifier: BusinessTableViewCell.key)
+        table.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.key)
         table.delegate = self
         table.dataSource = self
         return table
@@ -25,9 +26,7 @@ class BusinessCell: UICollectionViewCell {
         super.init(frame: frame)
         
         fetchInfo()
-        
         addSubview(businessTableView)
-        
         updateConstraints()
     }
     
@@ -43,13 +42,13 @@ class BusinessCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fetchInfo() {
-        NetworkService.fetchBusinessArticles { [weak self] result in
+    private func fetchInfo() {
+        NetworkService.fetchSportArticles { [weak self] result in
             switch result {
             case .success(let articles):
-                self?.articles = articles
-                self?.viewModels = articles.compactMap {
-                    BusinessTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
+                self?.articlesList = articles
+                self?.viewModel = articles.compactMap {
+                    CustomTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", url: $0.url ?? "", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
 
                 DispatchQueue.main.async {
@@ -62,14 +61,14 @@ class BusinessCell: UICollectionViewCell {
     }
 }
 
-extension BusinessCell: UITableViewDelegate, UITableViewDataSource {
+extension SportsCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModels.count
+        viewModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BusinessTableViewCell.key, for: indexPath) as? BusinessTableViewCell else { fatalError() }
-        cell.configure(with: viewModels[indexPath.row])
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.key, for: indexPath) as? CustomTableViewCell else { fatalError() }
+        cell.configure(with: viewModel[indexPath.row])
         return cell
     }
     
@@ -78,7 +77,7 @@ extension BusinessCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = URL(string: viewModels[indexPath.row].url ?? "") else { return }
+        guard let url = URL(string: viewModel[indexPath.row].url ?? "") else { return }
         delegate?.loadNewScreen(url: url)
     }
 }

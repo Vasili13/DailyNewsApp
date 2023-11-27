@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseStorage
 import UIKit
 
-class RegistrationViewController: UIViewController {
+final class RegistrationViewController: UIViewController {
     @IBOutlet var nameTF: UITextField!
     @IBOutlet var emailTF: UITextField!
     @IBOutlet var passwordTF: UITextField!

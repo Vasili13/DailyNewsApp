@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MenuCell: UICollectionViewCell {
+final class MenuCell: UICollectionViewCell {
     lazy var categoryText: UILabel = {
         let lbl = UILabel()
         lbl.font = .systemFont(ofSize: 17, weight: .bold)

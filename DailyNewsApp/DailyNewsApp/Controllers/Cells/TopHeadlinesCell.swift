@@ -13,15 +13,15 @@ protocol LoadSafariProtocol {
     func loadNewScreen(url: URL) -> Void
 }
 
-class TopHeadlinesCell: UICollectionViewCell {
+final class TopHeadlinesCell: UICollectionViewCell {
     
     var delegate: LoadSafariProtocol?
-    var articles = [Article]()
-    var viewModels = [NewsTableViewCellViewModel]()
+    private var articlesList = [Article]()
+    private var viewModel = [CustomTableViewCellViewModel]()
     
     lazy var newsTableView: UITableView = {
         let table = UITableView(frame: .zero)
-        table.register(NewsTableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.key)
+        table.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.key)
         table.delegate = self
         table.dataSource = self
         return table
@@ -29,19 +29,18 @@ class TopHeadlinesCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         addSubview(newsTableView)
         fetchInfo()
         updateConstraints()
     }
     
-    func fetchInfo() {
+    private func fetchInfo() {
         NetworkService.fetchArticles { [weak self] result in
             switch result {
             case .success(let articles):
-                self?.articles = articles
-                self?.viewModels = articles.compactMap {
-                    NewsTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", imageURL: URL(string: $0.urlToImage ?? ""), url: $0.url ?? "")
+                self?.articlesList = articles
+                self?.viewModel = articles.compactMap {
+                    CustomTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", url: $0.url ?? "", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
                 DispatchQueue.main.async {
                     self?.newsTableView.reloadData()
@@ -67,13 +66,14 @@ class TopHeadlinesCell: UICollectionViewCell {
 }
 
 extension TopHeadlinesCell: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModels.count
+        return viewModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.key, for: indexPath) as? NewsTableViewCell else { fatalError() }
-        cell.configure(with: viewModels[indexPath.row])
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.key, for: indexPath) as? CustomTableViewCell else { fatalError() }
+        cell.configure(with: viewModel[indexPath.row])
         return cell
     }
     
@@ -82,7 +82,7 @@ extension TopHeadlinesCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = URL(string: viewModels[indexPath.row].url ?? "") else { return }
+        guard let url = URL(string: viewModel[indexPath.row].url ?? "") else { return }
         delegate?.loadNewScreen(url: url)
     }
 }

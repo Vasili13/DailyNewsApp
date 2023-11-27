@@ -13,12 +13,11 @@ import SnapKit
 import UIKit
 
 // -MARK: MainViewController
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
-    var ref: DatabaseReference!
-    var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle!
-    
-    var article1 = [Article]()
+    private var ref: DatabaseReference!
+    private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle!
+    private var articleList = [Article]()
     
     lazy var menuBar: MenuBarCollectionView = {
         let mb = MenuBarCollectionView()
