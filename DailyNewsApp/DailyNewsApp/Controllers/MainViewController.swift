@@ -15,6 +15,7 @@ import UIKit
 // -MARK: MainViewController
 final class MainViewController: UIViewController {
     
+    private let customID = "customID"
     private var ref: DatabaseReference!
     private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle!
     private var articleList = [Article]()
@@ -29,38 +30,24 @@ final class MainViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
-        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(TopHeadlinesCell.self, forCellWithReuseIdentifier: topCellId)
-        cv.register(EntertainmentCell.self, forCellWithReuseIdentifier: environmentCellId)
-        cv.register(BusinessCell.self, forCellWithReuseIdentifier: businessCellId)
-        cv.register(HealthCell.self, forCellWithReuseIdentifier: healthCellId)
-        cv.register(ScienceCell.self, forCellWithReuseIdentifier: scienceCellId)
-        cv.register(SportsCell.self, forCellWithReuseIdentifier: sportsCellId)
-        cv.register(TechnologyCell.self, forCellWithReuseIdentifier: technologyCellId)
-        
+        cv.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: customID)
         cv.dataSource = self
         cv.delegate = self
         cv.isPagingEnabled = true
         return cv
     }()
     
-    private let topCellId = "topCellId"
-    private let environmentCellId = "environmentCellId"
-    private let businessCellId = "businessCellId"
-    private let healthCellId = "healthCellId"
-    private let scienceCellId = "scienceCellId"
-    private let sportsCellId = "sportsCellId"
-    private let technologyCellId = "technologyCellId"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configurateNavBar()
+        setUpView()
+        updateViewConstraints()
+    }
+    
+    private func setUpView() {
         view.addSubview(menuBar)
         view.addSubview(horizontalNewsCollectionView)
-        
-        updateViewConstraints()
     }
 
     func scrollMenu(menuIndex: Int) {
@@ -69,16 +56,12 @@ final class MainViewController: UIViewController {
     }
     
     private func configurateNavBar() {
-//        navigationItem.title = "News"
         
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         imageView.contentMode = .scaleAspectFit
         let image = UIImage(named: "1024")
         imageView.image = image
         navigationItem.titleView = imageView
-        
-//        let image = UIImage(named: "102")
-//        navigationItem.titleView = UIImageView(image: image)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .done, target: self, action: #selector(openLogFloworUserFlow))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle.fill"), style: .done, target: self, action: #selector(searchInfo))
         navigationItem.rightBarButtonItem?.tintColor = .black
@@ -130,43 +113,24 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: customID, for: indexPath) as? CustomCollectionViewCell else { fatalError() }
         if indexPath.item == 0 {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: topCellId, for: indexPath) as? TopHeadlinesCell {
-                cell.delegate = self
-                return cell
-            }
+            cell.getRequest(for: Endpoint.topHeadlines)
         } else if indexPath.item == 1 {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: environmentCellId, for: indexPath) as? EntertainmentCell {
-                cell.delegate = self
-                return cell
-            }
+            cell.getRequest(for: Endpoint.entHeadlines)
         } else if indexPath.item == 2 {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: businessCellId, for: indexPath) as? BusinessCell {
-                cell.delegate = self
-                return cell
-            }
+            cell.getRequest(for: Endpoint.businessHeadlines)
         } else if indexPath.item == 3 {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: healthCellId, for: indexPath) as? HealthCell {
-                cell.delegate = self
-                return cell
-            }
+            cell.getRequest(for: Endpoint.healthHeadlines)
         } else if indexPath.item == 4 {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: scienceCellId, for: indexPath) as? ScienceCell {
-                cell.delegate = self
-                return cell
-            }
+            cell.getRequest(for: Endpoint.scienceHeadlines)
         } else if indexPath.item == 5 {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sportsCellId, for: indexPath) as? SportsCell {
-                cell.delegate = self
-                return cell
-            }
+            cell.getRequest(for: Endpoint.sportHeadlines)
         } else if indexPath.item == 6 {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: technologyCellId, for: indexPath) as? TechnologyCell {
-                cell.delegate = self
-                return cell
-            }
+            cell.getRequest(for: Endpoint.techHeadlines)
         }
-        return UICollectionViewCell()
+        cell.delegate = self
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

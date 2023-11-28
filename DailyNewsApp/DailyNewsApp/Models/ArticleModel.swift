@@ -8,7 +8,7 @@
 import Foundation
 
 struct Response: Codable {
-    let articles: [Article]
+    var articles: [Article]
 }
 
 struct Article: Codable {
