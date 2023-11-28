@@ -1,19 +1,14 @@
 //
-//  CategoryCell.swift
+//  CustomCollectionViewCell.swift
 //  DailyNewsApp
 //
-//  Created by Василий Вырвич on 22.03.23.
+//  Created by Василий Вырвич on 28.11.23.
 //
 
-import SafariServices
-import SnapKit
 import UIKit
+import SnapKit
 
-protocol LoadSafariProtocol {
-    func loadNewScreen(url: URL) -> Void
-}
-
-final class TopHeadlinesCell: UICollectionViewCell {
+class CustomCollectionViewCell: UICollectionViewCell {
     
     var delegate: LoadSafariProtocol?
     private var articlesList = [Article]()
@@ -30,25 +25,34 @@ final class TopHeadlinesCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(newsTableView)
-        fetchInfo()
         updateConstraints()
     }
     
-    private func fetchInfo() {
-        NetworkService.fetchArticles { [weak self] result in
-            switch result {
-            case .success(let articles):
-                self?.articlesList = articles
-                self?.viewModel = articles.compactMap {
+    func getRequest(for endPoint: Endpoint) {
+        guard let url = URL(string: endPoint.url) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else {
+                print("Error fetching pokemon list:", error?.localizedDescription ?? "")
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(Response.self, from: data)
+                
+                let articles = response.articles
+                self.articlesList = articles
+                self.viewModel = articles.compactMap {
                     CustomTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", url: $0.url ?? "", imageURL: URL(string: $0.urlToImage ?? ""))
                 }
                 DispatchQueue.main.async {
-                    self?.newsTableView.reloadData()
+                    self.newsTableView.reloadData()
                 }
-            case .failure(let error):
-                print(error)
+            } catch {
+                print("Error decoding pokemon list:", error.localizedDescription)
             }
         }
+        task.resume()
     }
     
     override func updateConstraints() {
@@ -65,7 +69,7 @@ final class TopHeadlinesCell: UICollectionViewCell {
     }
 }
 
-extension TopHeadlinesCell: UITableViewDelegate, UITableViewDataSource {
+extension CustomCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.count
