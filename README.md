@@ -10,3 +10,4 @@ This application shows various areticles from a large number of sources. During 
 - FirebaseStorge
 - URLSession
 - MVC architecture
+- Safari Services
