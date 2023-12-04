@@ -128,10 +128,10 @@
 			isa = PBXGroup;
 			children = (
 				9E59C67729BDF07A00F69204 /* MainViewController.swift */,
-				9EB1C64929D4DA8600476732 /* UserViewController.swift */,
-				9EB4D18C2B13D12300DC1B3D /* CustomTableViewCell.swift */,
 				9EB4D1932B166D3100DC1B3D /* CustomCollectionViewCell.swift */,
+				9EB4D18C2B13D12300DC1B3D /* CustomTableViewCell.swift */,
 				9EB4D1952B167D3400DC1B3D /* LoadSafariProtocol.swift */,
+				9EB1C64929D4DA8600476732 /* UserViewController.swift */,
 				9EF3392129DDCE6E001ABE33 /* LogFlow */,
 				9EF3392029DDCE3A001ABE33 /* MenuBarFlow */,
 				9EF3391F29DDCE23001ABE33 /* SearchFlow */,

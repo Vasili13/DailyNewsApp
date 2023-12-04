@@ -31,16 +31,10 @@ class CustomCollectionViewCell: UICollectionViewCell {
     func getRequest(for endPoint: Endpoint) {
         guard let url = URL(string: endPoint.url) else { return }
         
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else {
-                print("Error fetching pokemon list:", error?.localizedDescription ?? "")
-                return
-            }
-            
-            do {
-                let response = try JSONDecoder().decode(Response.self, from: data)
-                
-                let articles = response.articles
+        NetworkService.fetchArticles(with: url) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let articles):
                 self.articlesList = articles
                 self.viewModel = articles.compactMap {
                     CustomTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "There is no description here", url: $0.url ?? "", imageURL: URL(string: $0.urlToImage ?? ""))
@@ -48,11 +42,10 @@ class CustomCollectionViewCell: UICollectionViewCell {
                 DispatchQueue.main.async {
                     self.newsTableView.reloadData()
                 }
-            } catch {
-                print("Error decoding pokemon list:", error.localizedDescription)
+            case .failure(let failure):
+                print(failure)
             }
         }
-        task.resume()
     }
     
     override func updateConstraints() {
